@@ -1,0 +1,5 @@
+{
+    "factory": "0x0",
+    "dripRate": 250000000000000000, 
+    "dripPeriodInSeconds": 31557600
+  }

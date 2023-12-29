@@ -5,6 +5,30 @@ import {ExponentialDripLib} from "../src/lib/ExponentialDripLib.sol";
 import {TestBase} from "./utils/TestBase.sol";
 
 contract ExponentialDripLibUnitTest is TestBase {
+  uint256 constant WAD = 1e18;
+  uint256 constant SECONDS_IN_YEAR = 31_557_600;
+  uint256 constant SECONDS_30_DAYS = 2_592_000;
+
+  function test_calculateDripRate_25Percent() public {
+    assertEq(ExponentialDripLib.calculateDripRate(75 * WAD, 100 * WAD, SECONDS_IN_YEAR), 9_116_094_733);
+    assertEq(ExponentialDripLib.calculateDripRate(750_000 * WAD, 1_000_000 * WAD, SECONDS_IN_YEAR), 9_116_094_733);
+    assertEq(ExponentialDripLib.calculateDripRate(30 * WAD, 40 * WAD, SECONDS_IN_YEAR), 9_116_094_733);
+
+    assertEq(ExponentialDripLib.calculateDripRate(75 * WAD, 100 * WAD, SECONDS_30_DAYS), 110_988_447_719);
+    assertEq(ExponentialDripLib.calculateDripRate(750_000 * WAD, 1_000_000 * WAD, SECONDS_30_DAYS), 110_988_447_719);
+    assertEq(ExponentialDripLib.calculateDripRate(30 * WAD, 40 * WAD, SECONDS_30_DAYS), 110_988_447_719);
+  }
+
+  function test_calculateDripRate_50Percent() public {
+    assertEq(ExponentialDripLib.calculateDripRate(50 * WAD, 100 * WAD, SECONDS_IN_YEAR), 21_964_508_484);
+    assertEq(ExponentialDripLib.calculateDripRate(500_000 * WAD, 1_000_000 * WAD, SECONDS_IN_YEAR), 21_964_508_484);
+    assertEq(ExponentialDripLib.calculateDripRate(20 * WAD, 40 * WAD, SECONDS_IN_YEAR), 21_964_508_484);
+
+    assertEq(ExponentialDripLib.calculateDripRate(50 * WAD, 100 * WAD, SECONDS_30_DAYS), 267_417_857_978);
+    assertEq(ExponentialDripLib.calculateDripRate(500_000 * WAD, 1_000_000 * WAD, SECONDS_30_DAYS), 267_417_857_978);
+    assertEq(ExponentialDripLib.calculateDripRate(20 * WAD, 40 * WAD, SECONDS_30_DAYS), 267_417_857_978);
+  }
+
   function test_exponentialDripFactor_Seconds() external {
     uint256 rate_ = 0.25e18; // 25% drip rate per second
 
@@ -40,18 +64,18 @@ contract ExponentialDripLibUnitTest is TestBase {
   }
 
   function test_exponentialDripFactor_100Rate() external {
-    uint256 rate_ = 1e18; // 100% drip
-    assertEq(ExponentialDripLib.calculateDripFactor(rate_, 1), 1e18);
+    uint256 rate_ = WAD; // 100% drip
+    assertEq(ExponentialDripLib.calculateDripFactor(rate_, 1), WAD);
   }
 
   function test_exponentialDripFactor_101RateReverts() external {
-    uint256 rate_ = 1e18 + 1;
+    uint256 rate_ = WAD + 1;
     _expectPanic(PANIC_MATH_UNDEROVERFLOW);
     ExponentialDripLib.calculateDripFactor(rate_, 1);
   }
 
   function testFuzz_exponentialDripFactor_LessOrEqualThan100Rate(uint256 rate_) external {
-    rate_ = bound(rate_, 1, 1e18 - 1);
-    assertLe(ExponentialDripLib.calculateDripFactor(rate_, 1), 1e18);
+    rate_ = bound(rate_, 1, WAD - 1);
+    assertLe(ExponentialDripLib.calculateDripFactor(rate_, 1), WAD);
   }
 }
