@@ -31,7 +31,9 @@ contract DripModelExponential is IDripModel {
     ratePerSecond = ratePerSecond_;
   }
 
-  function dripFactor(uint256, /* lastDripTime_ */ uint256 timeSinceLastDrip_) external view returns (uint256) {
+  function dripFactor(uint256 lastDripTime_) external view returns (uint256) {
+    uint256 timeSinceLastDrip_ = block.timestamp - lastDripTime_;
+    if (timeSinceLastDrip_ == 0) return 0;
     return ExponentialDripLib.calculateDripFactor(ratePerSecond, timeSinceLastDrip_);
   }
 }
