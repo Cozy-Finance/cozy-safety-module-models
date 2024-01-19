@@ -16,4 +16,9 @@ contract DripModelExponentialTest is Test {
       model.dripFactor(lastDripTime_), ExponentialDripLib.calculateDripFactor(rate_, block.timestamp - lastDripTime_)
     );
   }
+
+  function testFuzz_ZeroTimeSinceLastDrip(uint256 rate_) public {
+    DripModelExponential model = new DripModelExponential(rate_);
+    assertEq(model.dripFactor(block.timestamp), 0);
+  }
 }
