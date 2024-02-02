@@ -2,7 +2,6 @@
 pragma solidity 0.8.22;
 
 import {FixedPointMathLib} from "solmate/utils/FixedPointMathLib.sol";
-import {wadLn, wadExp} from "solmate/utils/SignedWadMath.sol";
 
 library ExponentialDripLib {
   using FixedPointMathLib for uint256;
@@ -28,8 +27,8 @@ library ExponentialDripLib {
     require(t_ <= MAX_INT256, "_t must be smaller than type(int256).max");
 
     // Let 1 - r = x, then (ln(A) - ln(p))/t = ln(x)
-    int256 lnX_ = (wadLn(int256(a_)) - wadLn(int256(p_))) / int256(t_);
-    int256 x_ = wadExp(lnX_);
+    int256 lnX_ = (FixedPointMathLib.lnWad(int256(a_)) - FixedPointMathLib.lnWad(int256(p_))) / int256(t_);
+    int256 x_ = FixedPointMathLib.expWad(lnX_);
     require(x_ >= 0, "_x must be >= 0");
     r_ = 1e18 - uint256(x_);
   }
