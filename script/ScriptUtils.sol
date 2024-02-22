@@ -9,7 +9,7 @@ contract ScriptUtils is Script {
   string INPUT_FOLDER = "/script/input/";
 
   // Returns the json string for the specified filename from `INPUT_FOLDER`.
-  function readInput(string memory _fileName) internal returns (string memory) {
+  function readInput(string memory _fileName) internal view returns (string memory) {
     string memory _root = vm.projectRoot();
     string memory _chainInputFolder = string.concat(INPUT_FOLDER, vm.toString(block.chainid), "/");
     string memory _inputFile = string.concat(_fileName, ".json");
