@@ -8,8 +8,6 @@ import {ExponentialDripLib} from "./lib/ExponentialDripLib.sol";
  * @notice Exponential rate drip model.
  */
 contract DripModelExponential is IDripModel {
-  uint256 internal constant ONE_YEAR = 365.25 days;
-
   /// @notice Drip rate per-second.
   uint256 public immutable ratePerSecond;
 
