@@ -22,16 +22,21 @@ contract DripModelConstant is IDripModel, Ownable {
     amountPerSecond = amountPerSecond_;
   }
 
+  /// @param amountPerSecond_ The amount to drip per-second. This amount should be denoted in the same precision as the
+  /// base amount that will be dripped.
   function updateAmountPerSecond(uint256 amountPerSecond_) external onlyOwner {
     amountPerSecond = amountPerSecond_;
   }
 
-  function dripFactor(uint256 lastDripTime_, uint256 amount_) external view returns (uint256) {
+  /// @notice Returns the drip factor, which is the factor to multiply the initial amount by to get the amount to drip.
+  /// @param lastDripTime_ The last time the drip was called.
+  /// @param initialAmount_ The initial amount to drip from.
+  function dripFactor(uint256 lastDripTime_, uint256 initialAmount_) external view returns (uint256) {
     uint256 timeSinceLastDrip_ = block.timestamp - lastDripTime_;
-    if (timeSinceLastDrip_ == 0 || amount_ == 0) return 0;
+    if (timeSinceLastDrip_ == 0 || initialAmount_ == 0) return 0;
 
-    // Calculate factor to multiply remaining_ by to get new amount after drip.
-    return 1e18 - _differenceOrZero(amount_, amountPerSecond * timeSinceLastDrip_).divWadDown(amount_);
+    // Calculate factor to multiply initialAmount_ by to get the amount to drip.
+    return 1e18 - _differenceOrZero(initialAmount_, amountPerSecond * timeSinceLastDrip_).divWadDown(initialAmount_);
   }
 
   /// @dev Returns `x - y` if the result is positive, or zero if `x - y` would overflow and result in a negative value.
