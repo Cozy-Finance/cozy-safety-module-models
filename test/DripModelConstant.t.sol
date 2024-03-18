@@ -5,7 +5,7 @@ import {MathConstants} from "cozy-safety-module-shared/lib/MathConstants.sol";
 import {DripModelConstant} from "../src/DripModelConstant.sol";
 import {TestBase} from "./utils/TestBase.sol";
 
-contract DripModelExponentialTest is TestBase {
+contract DripModelConstantTest is TestBase {
   DripModelConstant model;
   address owner = address(0xBEEF);
 
