@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Unlicensed
 pragma solidity 0.8.22;
 
+import {MathConstants} from "cozy-safety-module-shared/lib/MathConstants.sol";
 import {Ownable} from "cozy-safety-module-shared/lib/Ownable.sol";
 import {FixedPointMathLib} from "solmate/utils/FixedPointMathLib.sol";
 
@@ -38,7 +39,8 @@ contract DripModelConstant is Ownable {
     if (timeSinceLastDrip_ == 0 || initialAmount_ == 0) return 0;
 
     // Calculate factor to multiply initialAmount_ by to get the amount to drip.
-    return 1e18 - _differenceOrZero(initialAmount_, amountPerSecond * timeSinceLastDrip_).divWadDown(initialAmount_);
+    return MathConstants.WAD
+      - _differenceOrZero(initialAmount_, amountPerSecond * timeSinceLastDrip_).divWadDown(initialAmount_);
   }
 
   /// @dev Returns `x - y` if the result is positive, or zero if `x - y` would overflow and result in a negative value.

@@ -30,5 +30,7 @@ contract DripModelConstantFactoryTest is TestBase, DripModelConstantFactory {
     vm.prank(caller_);
     DripModelConstant model_ = factory.deployModel(owner_, amountPerSecond_, baseSalt_);
     assertEq(address(model_), expectedAddr_, "deployModel should return the expected address");
+    assertEq(model_.owner(), owner_, "owner should be set");
+    assertEq(model_.amountPerSecond(), amountPerSecond_, "amountPerSecond should be set");
   }
 }

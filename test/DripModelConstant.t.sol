@@ -1,14 +1,11 @@
 // SPDX-License-Identifier: Unlicensed
 pragma solidity 0.8.22;
 
+import {MathConstants} from "cozy-safety-module-shared/lib/MathConstants.sol";
 import {DripModelConstant} from "../src/DripModelConstant.sol";
 import {TestBase} from "./utils/TestBase.sol";
 
 contract DripModelExponentialTest is TestBase {
-  uint256 constant WAD = 1e18;
-  uint256 constant SECONDS_IN_YEAR = 31_557_600;
-  uint256 constant SECONDS_30_DAYS = 2_592_000;
-
   DripModelConstant model;
   address owner = address(0xBEEF);
 
@@ -44,7 +41,7 @@ contract DripModelExponentialTest is TestBase {
 
     assertEq(
       model.dripFactor(block.timestamp - 1, initialAmount_),
-      WAD,
+      MathConstants.WAD,
       "dripFactor should be 1e18 when initialAmount is lte amountPerSecond"
     );
   }
@@ -76,6 +73,6 @@ contract DripModelExponentialTest is TestBase {
     vm.warp(currentTime_);
 
     uint256 dripFactor_ = model.dripFactor(bound(_randomUint64(), 0, currentTime_ - 1), initialAmount_);
-    assertLe(dripFactor_, WAD, "dripFactor should be less or equal to 1e18");
+    assertLe(dripFactor_, MathConstants.WAD, "dripFactor should be less or equal to 1e18");
   }
 }
