@@ -3,16 +3,17 @@ pragma solidity 0.8.22;
 
 import {Ownable} from "cozy-safety-module-shared/lib/Ownable.sol";
 import {FixedPointMathLib} from "solmate/utils/FixedPointMathLib.sol";
-import {IDripModel} from "./interfaces/IDripModel.sol";
 
 /**
  * @notice Constant rate drip model.
  */
-contract DripModelConstant is IDripModel, Ownable {
+contract DripModelConstant is Ownable {
   using FixedPointMathLib for uint256;
 
   /// @notice The amount to drip per-second.
   uint256 public amountPerSecond;
+
+  event AmountPerSecondUpdated(uint256 oldAmountPerSecond, uint256 newAmountPerSecond);
 
   /// @param owner_ The owner of the contract, allowed to update the `amountPerSecond` and transfer ownership.
   /// @param amountPerSecond_ The amount to drip per-second. This amount should be denoted in the same precision as the
@@ -25,6 +26,7 @@ contract DripModelConstant is IDripModel, Ownable {
   /// @param amountPerSecond_ The amount to drip per-second. This amount should be denoted in the same precision as the
   /// base amount that will be dripped.
   function updateAmountPerSecond(uint256 amountPerSecond_) external onlyOwner {
+    emit AmountPerSecondUpdated(amountPerSecond, amountPerSecond_);
     amountPerSecond = amountPerSecond_;
   }
 
