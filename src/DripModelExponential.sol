@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Unlicensed
 pragma solidity 0.8.22;
 
-import {IDripModel} from "./interfaces/IDripModel.sol";
+import {IDripModel} from "cozy-safety-module-shared/interfaces/IDripModel.sol";
 import {ExponentialDripLib} from "./lib/ExponentialDripLib.sol";
 
 /**
@@ -29,7 +29,7 @@ contract DripModelExponential is IDripModel {
     ratePerSecond = ratePerSecond_;
   }
 
-  function dripFactor(uint256 lastDripTime_) external view returns (uint256) {
+  function dripFactor(uint256 lastDripTime_, uint256 /* initialAmount_ */ ) external view returns (uint256) {
     uint256 timeSinceLastDrip_ = block.timestamp - lastDripTime_;
     if (timeSinceLastDrip_ == 0) return 0;
     return ExponentialDripLib.calculateDripFactor(ratePerSecond, timeSinceLastDrip_);
