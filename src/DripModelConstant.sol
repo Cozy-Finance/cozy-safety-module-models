@@ -4,7 +4,7 @@ pragma solidity 0.8.22;
 import {MathConstants} from "cozy-safety-module-shared/lib/MathConstants.sol";
 import {Ownable} from "cozy-safety-module-shared/lib/Ownable.sol";
 import {IDripModel} from "cozy-safety-module-shared/interfaces/IDripModel.sol";
-import {FixedPointMathLib} from "solmate/utils/FixedPointMathLib.sol";
+import {FixedPointMathLib} from "../lib/solmate/src/utils/FixedPointMathLib.sol";
 
 /**
  * @notice Constant rate drip model.

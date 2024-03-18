@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Unlicensed
 pragma solidity 0.8.22;
 
-import {FixedPointMathLib} from "solmate/utils/FixedPointMathLib.sol";
+import {FixedPointMathLib} from "../../lib/solmate/src/utils/FixedPointMathLib.sol";
 
 library ExponentialDripLib {
   using FixedPointMathLib for uint256;
