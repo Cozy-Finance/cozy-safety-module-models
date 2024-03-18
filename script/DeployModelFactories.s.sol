@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Unlicensed
 pragma solidity 0.8.22;
 
+import {DripModelConstantFactory} from "../src/DripModelConstantFactory.sol";
 import {DripModelExponentialFactory} from "../src/DripModelExponentialFactory.sol";
 import "forge-std/Script.sol";
 
@@ -38,6 +39,11 @@ contract DeployModelFactories is Script {
     vm.broadcast();
     address dripModelExponentialFactory = address(new DripModelExponentialFactory());
     console2.log("  DripModelExponentialFactory deployed,", dripModelExponentialFactory);
+
+    console2.log("  Deploying DripModelConstantFactory...");
+    vm.broadcast();
+    address dripModelConstantFactory = address(new DripModelConstantFactory());
+    console2.log("  DripModelConstantFactory deployed,", dripModelConstantFactory);
 
     console2.log("Finished deploying Cozy Safety Module Model Factories");
   }
