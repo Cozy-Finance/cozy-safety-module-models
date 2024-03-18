@@ -8,6 +8,7 @@ optimizer = true
 optimizer_runs = 1
 remappings = [
   "solmate/=lib/solmate/src/",
+  "cozy-safety-module-shared/=lib/cozy-safety-module-shared/src",
 ]
 fs_permissions = [{ access = "read", path = "./script/input"}]
 
