@@ -4,6 +4,7 @@ pragma solidity 0.8.22;
 import {MathConstants} from "cozy-safety-module-shared/lib/MathConstants.sol";
 import {Ownable} from "cozy-safety-module-shared/lib/Ownable.sol";
 import {FixedPointMathLib} from "solmate/utils/FixedPointMathLib.sol";
+import "forge-std/console2.sol";
 
 /**
  * @notice Constant rate drip model.
@@ -39,8 +40,9 @@ contract DripModelConstant is Ownable {
     if (timeSinceLastDrip_ == 0 || initialAmount_ == 0) return 0;
 
     // Calculate factor to multiply initialAmount_ by to get the amount to drip.
+    // The result of division is rounded up to favor a smaller drip factor.
     return MathConstants.WAD
-      - _differenceOrZero(initialAmount_, amountPerSecond * timeSinceLastDrip_).divWadDown(initialAmount_);
+      - _differenceOrZero(initialAmount_, amountPerSecond * timeSinceLastDrip_).divWadUp(initialAmount_);
   }
 
   /// @dev Returns `x - y` if the result is positive, or zero if `x - y` would overflow and result in a negative value.

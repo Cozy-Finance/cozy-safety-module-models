@@ -75,4 +75,42 @@ contract DripModelExponentialTest is TestBase {
     uint256 dripFactor_ = model.dripFactor(bound(_randomUint64(), 0, currentTime_ - 1), initialAmount_);
     assertLe(dripFactor_, MathConstants.WAD, "dripFactor should be less or equal to 1e18");
   }
+
+  function test_concreteDripFactor() external {
+    uint256 currentTime_ = 100;
+    vm.warp(currentTime_);
+
+    uint256 dripFactor_ = model.dripFactor(currentTime_ - 1, 50);
+    assertEq(dripFactor_, MathConstants.WAD, "dripFactor should be 1e18 when initial amount < amountPerSecond");
+
+    dripFactor_ = model.dripFactor(currentTime_ - 1, 100);
+    assertEq(dripFactor_, MathConstants.WAD, "dripFactor should be 1e18");
+
+    dripFactor_ = model.dripFactor(currentTime_ - 1, 200);
+    assertEq(dripFactor_, 0.5e18, "dripFactor should be 0.5e18");
+
+    dripFactor_ = model.dripFactor(currentTime_ - 1, 500);
+    assertEq(dripFactor_, 0.2e18, "dripFactor should be 0.2e18");
+
+    dripFactor_ = model.dripFactor(currentTime_ - 1, 1000);
+    assertEq(dripFactor_, 0.1e18, "dripFactor should be 0.1e18");
+
+    dripFactor_ = model.dripFactor(currentTime_ - 2, 100);
+    assertEq(dripFactor_, MathConstants.WAD, "dripFactor should be 1e18 when initial amount < amountPerSecond");
+
+    dripFactor_ = model.dripFactor(currentTime_ - 2, 200);
+    assertEq(dripFactor_, 1e18, "dripFactor should be 1e18");
+
+    dripFactor_ = model.dripFactor(currentTime_ - 2, 400);
+    assertEq(dripFactor_, 0.5e18, "dripFactor should be 0.5e18");
+
+    dripFactor_ = model.dripFactor(currentTime_ - 2, 800);
+    assertEq(dripFactor_, 0.25e18, "dripFactor should be 0.25e18");
+
+    dripFactor_ = model.dripFactor(currentTime_ - 2, 1000);
+    assertEq(dripFactor_, 0.2e18, "dripFactor should be 0.2e18");
+
+    dripFactor_ = model.dripFactor(currentTime_ - 1, 1000e18);
+    assertEq(dripFactor_, 0, "dripFactor should be 0, because rounding favors dripping less assets than more");
+  }
 }
