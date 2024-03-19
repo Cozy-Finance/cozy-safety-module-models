@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Unlicensed
 pragma solidity 0.8.22;
 
+import {IDripModel} from "cozy-safety-module-shared/interfaces/IDripModel.sol";
 import {DripModelExponential} from "./DripModelExponential.sol";
 import {BaseModelFactory} from "./abstract/BaseModelFactory.sol";
 import {Create2} from "./lib/Create2.sol";
@@ -16,7 +17,7 @@ contract DripModelExponentialFactory is BaseModelFactory {
   /// indicates what the params from the deployment are. This address is then cached inside the
   /// isDeployed mapping.
   /// @return model_ which has an address that is deterministic with the input ratePerSecond_.
-  function deployModel(uint256 ratePerSecond_) external returns (DripModelExponential model_) {
+  function deployModel(uint256 ratePerSecond_) external returns (IDripModel model_) {
     model_ = new DripModelExponential{salt: DEFAULT_SALT}(ratePerSecond_);
     isDeployed[address(model_)] = true;
 

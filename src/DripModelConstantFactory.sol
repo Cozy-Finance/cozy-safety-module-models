@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Unlicensed
 pragma solidity 0.8.22;
 
+import {IDripModel} from "cozy-safety-module-shared/interfaces/IDripModel.sol";
 import {DripModelConstant} from "./DripModelConstant.sol";
 import {BaseModelFactory} from "./abstract/BaseModelFactory.sol";
 import {Create2} from "./lib/Create2.sol";
@@ -18,7 +19,7 @@ contract DripModelConstantFactory {
   /// @return model_ which has an address that is deterministic with the input amountPerSecond_.
   function deployModel(address owner_, uint256 amountPerSecond_, bytes32 baseSalt_)
     external
-    returns (DripModelConstant model_)
+    returns (IDripModel model_)
   {
     model_ = new DripModelConstant{salt: _computeDeploySalt(msg.sender, baseSalt_)}(owner_, amountPerSecond_);
     emit DeployedDripModelConstant(address(model_), owner_, amountPerSecond_);
