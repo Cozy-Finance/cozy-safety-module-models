@@ -78,5 +78,9 @@ contract DeployDripModelExponential is ScriptUtils {
     }
 
     console2.log("Your DripModelExponential is available at this address:", availableModel_);
+
+    vm.broadcast();
+    address defaultModel_ = address(factory_.deployModel(1e18));
+    console2.log("Your 100% drip model is available at this address:", defaultModel_);
   }
 }
