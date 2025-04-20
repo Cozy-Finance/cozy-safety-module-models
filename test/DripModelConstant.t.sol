@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Unlicensed
 pragma solidity 0.8.22;
 
-import {MathConstants} from "cozy-safety-module-shared/lib/MathConstants.sol";
+import {MathConstants} from "cozy-safety-module-libs/lib/MathConstants.sol";
 import {DripModelConstant} from "../src/DripModelConstant.sol";
 import {TestBase} from "./utils/TestBase.sol";
 
