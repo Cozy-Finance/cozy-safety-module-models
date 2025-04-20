@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity 0.8.22;
 
-import {IDripModel} from "cozy-safety-module-shared/interfaces/IDripModel.sol";
+import {IDripModel} from "cozy-safety-module-libs/interfaces/IDripModel.sol";
 import {DripModelConstant} from "./DripModelConstant.sol";
 import {BaseModelFactory} from "./abstract/BaseModelFactory.sol";
 import {Create2} from "./lib/Create2.sol";

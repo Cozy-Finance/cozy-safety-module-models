@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.0;
 
-import {IDripModel} from "cozy-safety-module-shared/interfaces/IDripModel.sol";
+import {IDripModel} from "cozy-safety-module-libs/interfaces/IDripModel.sol";
 
 interface IDripModelConstantFactory {
   /// @notice Deploys a DripModelConstant contract and emits a DeployedDripModelConstant event that

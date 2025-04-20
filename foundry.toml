@@ -6,7 +6,7 @@ solc_version = "0.8.22"
 optimizer = true
 optimizer_runs = 1
 remappings = [
-  "cozy-safety-module-shared/=lib/cozy-safety-module-shared/src",
+  "cozy-safety-module-libs/=lib/cozy-safety-module-libs/src",
 ]
 fs_permissions = [{ access = "read", path = "./script/input"}]
 
